@@ -1,24 +1,31 @@
 import images from "../gallery-items.js";
 
-const imageList = document.querySelector(".js-gallery"),
-    lightboxRef = document.querySelector(".js-lightbox"),
-    closeModalBtn = document.querySelector(
-        "button[data-action='close-lightbox']"
-    ),
-    lightboxContentImgRef = document.querySelector(".lightbox__image"),
-    overlay = document.querySelector(".lightbox__overlay"),
-    itemsMarkup = createGalleryItemsMarkup(images);
+const galleryContainer = document.querySelector(".js-gallery")
+
+const lightboxRef = document.querySelector(".js-lightbox")
+
+const lightboxContentImgRef = document.querySelector(".lightbox__image")
+
+
+const closeModalBtn = document.querySelector(
+    "button[data-action='close-lightbox']"
+)
+
+const overlay = document.querySelector(".lightbox__overlay")
+
+const itemsMarkup = createGalleryItemsMarkup(images)
 
 let currentImg;
-imageList.insertAdjacentHTML("beforeend", itemsMarkup);
 
-imageList.addEventListener("click", onImgClick);
+galleryContainer.insertAdjacentHTML("beforeend", itemsMarkup);
+
+galleryContainer.addEventListener("click", onImgClick);
 closeModalBtn.addEventListener("click", onCloseModal);
 overlay.addEventListener("click", () => onCloseModal());
 
-// функция создания разметки
-function createGalleryItemsMarkup(items) {
-    return items
+// Cоздание разметки
+function createGalleryItemsMarkup(images) {
+    return images
         .map(({ preview, original, description }) => {
             return `
     <li class="gallery__item">
@@ -39,7 +46,7 @@ function createGalleryItemsMarkup(items) {
         .join("");
 }
 
-// функция фильтра кликов делегирования
+// Реализация делегирования
 function onImgClick(e) {
     if (e.target.nodeName !== "IMG") {
         return;
@@ -52,21 +59,21 @@ function onImgClick(e) {
     onOpenModal();
 }
 
-// функиция открытия модалки
+// Открытие модального окна по клику на элементе галереи
 function onOpenModal() {
     lightboxRef.classList.add("is-open");
     document.addEventListener("keydown", onEscKeyPress);
     document.addEventListener("keyup", imageArrowsFlipping);
 }
 
-// функция закрытия модалки
+// Закрытие модального окна
 function onCloseModal() {
     lightboxRef.classList.remove("is-open");
     document.removeEventListener("keydown", onEscKeyPress);
     document.removeEventListener("keyup", imageArrowsFlipping);
 }
 
-// функция добавления url изображения в модалку
+// Добавление url изображения в модалку
 function addLightboxContent(url) {
     if (lightboxContentImgRef.src !== "") {
         lightboxContentImgRef.src = "";
@@ -75,7 +82,7 @@ function addLightboxContent(url) {
     lightboxContentImgRef.alt = url.alt;
 }
 
-// функция закрытия по ESC
+// Закрытие по ESC
 function onEscKeyPress(e) {
     const ESC_KEY_CODE = "Escape";
     if (e.code === ESC_KEY_CODE) {
@@ -83,7 +90,7 @@ function onEscKeyPress(e) {
     }
 }
 
-// функция перелистывания стрелками
+// Перелистывание срелками
 function imageArrowsFlipping(e) {
     const parrent = currentImg.closest("li");
 
