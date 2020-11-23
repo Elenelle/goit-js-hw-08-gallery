@@ -6,7 +6,6 @@ const lightboxRef = document.querySelector(".js-lightbox")
 
 const lightboxContentImgRef = document.querySelector(".lightbox__image")
 
-
 const closeModalBtn = document.querySelector(
     "button[data-action='close-lightbox']"
 )
@@ -95,18 +94,14 @@ function imageArrowsFlipping(e) {
     const parrent = currentImg.closest("li");
 
     if (e.code === "ArrowRight") {
-        onNextKeyPress(parrent);
+        onKeyPress(parrent.nextElementSibling);
     } else if (e.code === "ArrowLeft") {
-        onPrevKeyPress(parrent);
+        onKeyPress(parrent.previousElementSibling);
     }
 }
 
-function onNextKeyPress(parrent) {
-    currentImg = parrent.nextElementSibling.querySelector("img");
-    addLightboxContent(currentImg);
-}
 
-function onPrevKeyPress(parrent) {
-    currentImg = parrent.previousElementSibling.querySelector("img");
+function onKeyPress(method) {
+    currentImg = method.querySelector("img");
     addLightboxContent(currentImg);
 }
