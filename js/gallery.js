@@ -100,7 +100,6 @@ function imageArrowsFlipping(e) {
     }
 }
 
-
 function onKeyPress(method) {
     currentImg = method.querySelector("img");
     addLightboxContent(currentImg);
